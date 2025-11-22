@@ -1,0 +1,164 @@
+repertori:
+  - original: anticipazione
+    abbreviation: AN
+    usage: null
+    type: generativo
+  - original: causa
+    abbreviation: CA
+    usage:
+      minimo: []
+      medio: [c, e]
+      medio_alto: [a, b, e]
+      alto: [a, b]
+    type: mantenimento
+  - original: commento
+    abbreviation: CM
+    usage:
+      minimo: [c, d, e]
+      medio: [c, d]
+      medio_alto: [a, b]
+      alto: []
+    type: mantenimento
+  - original: conferma
+    abbreviation: CF
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [b, d]
+      alto: [a]
+    type: ibrido
+  - original: considerazione
+    abbreviation: CO
+    usage: null
+    type: generativo
+  - original: contrapposizione
+    abbreviation: CT
+    usage:
+      minimo: [a, d, e, g]
+      medio: [a, b, d]
+      medio_alto: [a, c, d]
+      alto: []
+    type: mantenimento
+  - original: deresponsabilizzazione
+    abbreviation: DR
+    usage: null
+    type: mantenimento
+  - original: descrizione
+    abbreviation: DS
+    type: generativo
+  - original: dichiarazione di intenti
+    abbreviation: DI
+    usage:
+      minimo: [a, b, d, e, g]
+      medio: [a, b, d, e]
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: generalizzazione
+    abbreviation: GN
+    usage:
+      minimo: [a, b, d, e, f]
+      medio: []
+      medio_alto: []
+      alto: []
+    type: mantenimento
+  - original: giudizio
+    abbreviation: GZ
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: [a, b, d]
+      alto: [a, b, c]
+    type: mantenimento
+  - original: giustificazione
+    abbreviation: GI
+    usage: null
+    type: mantenimento
+  - original: implicazione
+    abbreviation: IM
+    usage:
+      minimo: [b]
+      medio: [e]
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: non risposta
+    abbreviation: NR
+    usage:
+      minimo: [c, d, e]
+      medio: []
+      medio_alto: [a, b, e]
+      alto: []
+    type: mantenimento
+  - original: opinione
+    abbreviation: OP
+    usage:
+      minimo: [a, d]
+      medio: [a, d]
+      medio_alto: []
+      alto: []
+    type: mantenimento
+  - original: possibilita
+    abbreviation: PO
+    usage:
+      minimo: [b, e, f]
+      medio: []
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: prescrizione
+    abbreviation: PZ
+    usage:
+      minimo: [a, b, e, f]
+      medio: [a, e]
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: previsione
+    abbreviation: PV
+    usage:
+      minimo: [a, b, c, e, g]
+      medio: [a, b, c, e]
+      medio_alto: []
+      alto: []
+    type: mantenimento
+  - original: proposta
+    abbreviation: PR
+    usage: null
+    type: generativo
+  - original: ridimensionamento
+    abbreviation: RI
+    usage:
+      minimo: [a, b, d, e, f, g]
+      medio: []
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: sancire
+    abbreviation: SR
+    usage: null
+    type: mantenimento
+  - original: specificazione
+    abbreviation: SP
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [d]
+      alto: []
+    type: ibrido
+  - original: valutazione
+    abbreviation: VA
+    usage:
+      minimo: [a, c, e, f]
+      medio: [a, c]
+      medio_alto: []
+      alto: []
+    type: ibrido
+  - original: riferimento obiettivo
+    abbreviation: RO
+    usage:
+      minimo: [b, e, f, g]
+      medio: []
+      medio_alto: []
+      alto: []
+    type: generativo

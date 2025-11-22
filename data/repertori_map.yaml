@@ -1,0 +1,165 @@
+repertori:
+  AN:
+    original: anticipazione
+    type: generativo
+    usage: null
+  CA:
+    original: causa
+    type: mantenimento
+    usage:
+      minimo: []
+      medio: [c, e]
+      medio_alto: [a, b, e]
+      alto: [a, b]
+  CM:
+    original: commento
+    type: mantenimento
+    usage:
+      minimo: [c, d, e]
+      medio: [c, d]
+      medio_alto: [a, b]
+      alto: []
+  CF:
+    original: conferma
+    type: ibrido
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [b, d]
+      alto: [a]
+  CO:
+    original: considerazione
+    type: generativo
+    usage: null
+  CT:
+    original: contrapposizione
+    type: mantenimento
+    usage:
+      minimo: [a, d, e, g]
+      medio: [a, b, d]
+      medio_alto: [a, c, d]
+      alto: []
+  DR:
+    original: deresponsabilizzazione
+    type: mantenimento
+    usage: null
+  DS:
+    original: descrizione
+    type: generativo
+    usage: null
+  DI:
+    original: dichiarazione di intenti
+    type: ibrido
+    usage:
+      minimo: [a, b, d, e, g]
+      medio: [a, b, d, e]
+      medio_alto: []
+      alto: []
+  GN:
+    original: generalizzazione
+    type: mantenimento
+    usage:
+      minimo: [a, b, d, e, f]
+      medio: []
+      medio_alto: []
+      alto: []
+  GZ:
+    original: giudizio
+    type: mantenimento
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: [a, b, d]
+      alto: [a, b, c]
+  GI:
+    original: giustificazione
+    type: mantenimento
+    usage: null
+  IM:
+    original: implicazione
+    type: ibrido
+    usage:
+      minimo: [b]
+      medio: [e]
+      medio_alto: []
+      alto: []
+  NR:
+    original: non risposta
+    type: mantenimento
+    usage:
+      minimo: [c, d, e]
+      medio: []
+      medio_alto: [a, b, e]
+      alto: []
+  OP:
+    original: opinione
+    type: mantenimento
+    usage:
+      minimo: [a, d]
+      medio: [a, d]
+      medio_alto: []
+      alto: []
+  PO:
+    original: possibilita
+    type: ibrido
+    usage:
+      minimo: [b, e, f]
+      medio: []
+      medio_alto: []
+      alto: []
+  PZ:
+    original: prescrizione
+    type: ibrido
+    usage:
+      minimo: [a, b, e, f]
+      medio: [a, e]
+      medio_alto: []
+      alto: []
+  PV:
+    original: previsione
+    type: mantenimento
+    usage:
+      minimo: [a, b, c, e, g]
+      medio: [a, b, c, e]
+      medio_alto: []
+      alto: []
+  PR:
+    original: proposta
+    type: generativo
+    usage: null
+  RI:
+    original: ridimensionamento
+    type: ibrido
+    usage:
+      minimo: [a, b, d, e, f, g]
+      medio: []
+      medio_alto: []
+      alto: []
+  SR:
+    original: sancire
+    type: mantenimento
+    usage: null
+  SP:
+    original: specificazione
+    type: ibrido
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [d]
+      alto: []
+  VA:
+    original: valutazione
+    type: ibrido
+    usage:
+      minimo: [a, c, e, f]
+      medio: [a, c]
+      medio_alto: []
+      alto: []
+  RO:
+    original: riferimento obiettivo
+    type: generativo
+    usage:
+      minimo: [b, e, f, g]
+      medio: []
+      medio_alto: []
+      alto: []
