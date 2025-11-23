@@ -267,11 +267,34 @@ body {
 }
 
 .btn-add:hover:not(:disabled) {
-  background-color: #2980b9; /* Slightly darker blue */
+  background-color: #2980b9;
   transform: translateY(-1px);
 }
 
 .btn-add:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-calc {
+  background-color: var(--accent-green); /* Green color */
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-calc:hover:not(:disabled) {
+  background-color: #27ae60; /* Darker green */
+  transform: translateY(-1px);
+}
+
+.btn-calc:disabled {
   background-color: #ccc;
   cursor: not-allowed;
   opacity: 0.7;
@@ -312,7 +335,75 @@ body {
   .risk-input-group {
     flex-direction: column;
   }
-  .btn-add, .risk-select {
+  .btn-add, .btn-calc,.risk-select {
     width: 100%;
   }
+}
+
+/* Table Styles for Result Page */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.result-table th {
+  background-color: #f8f9fa;
+  color: var(--text-secondary);
+  font-weight: 700;
+  padding: 1rem;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  border-bottom: 2px solid #eee;
+}
+
+.result-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+  color: var(--text-main);
+}
+
+.result-table tr:last-child td {
+  border-bottom: none;
+}
+
+.result-table tr:hover {
+  background-color: #fafafa;
+}
+
+.level-cell {
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+.data-value {
+  font-family: 'Courier New', monospace;
+  background-color: rgba(52, 152, 219, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #2c3e50;
+}
+
+.empty-value {
+  color: #ccc;
+  font-style: italic;
+}
+
+/* Highlighted Row Style */
+.result-table tr.highlight-row {
+  background-color: rgba(201, 204, 46, 0.2) !important; /* Light green tint */
+  border-left: 4px solid #ccaa2e; /* Accent border on the left */
+}
+
+/* Ensure hover effect doesn't override the highlight completely, 
+   but maybe darken it slightly to show interactivity */
+.result-table tr.highlight-row:hover {
+  background-color: rgba(201, 204, 46, 0.3) !important;
 }

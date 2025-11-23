@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import RepertorioGrid from './components/RepertorioGrid';
 import IndiceRischio from './components/IndiceRischio';
+import RiskResult from './components/RischioTable'; 
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<RepertorioGrid />} />
             <Route path="/rischio" element={<IndiceRischio />} />
+            <Route path="/risultato" element={<RiskResult />} />
           </Routes>
         </main>
       </div>

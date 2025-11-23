@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Debug Fullstack",
+            "configurations": ["FastAPI Backend", "Frontend (npm start)"]
+        }
+    ],
+    "configurations": [
+        {
+            "name": "FastAPI Backend",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "backend.app:app",
+                "--reload",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": true
+        },
+        {
+            "name": "Frontend (npm start)",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/frontend", 
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "start"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}

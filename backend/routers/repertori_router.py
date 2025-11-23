@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from typing import Dict
+from typing import Dict, List
 from backend.schemas import Repertorio
 from backend.dependencies import get_repertori_data
 
@@ -10,6 +10,12 @@ router = APIRouter(prefix="/repertori", tags=["Repertori"])
 def list_repertori(data: dict = Depends(get_repertori_data)):
     """Get all repertories."""
     return data
+
+
+@router.get("/names", response_model=List[str])
+def list_repertori_names(data: dict = Depends(get_repertori_data)):
+    """Get all repertories names."""
+    return list(data.keys())
 
 
 @router.get("/{code}", response_model=Repertorio)

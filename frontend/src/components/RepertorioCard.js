@@ -28,7 +28,7 @@ const RepertorioCard = ({ code, data }) => {
       <div className="card-body">
         {usage ? (
           <div className="usage-container">
-            <h4 className="usage-title">Livelli di Utilizzo</h4>
+            <h4 className="usage-title">Uso nei livelli</h4>
             <div className="usage-grid">
               {Object.entries(usage).map(([level, chars]) => (
                 <div key={level} className="usage-item">

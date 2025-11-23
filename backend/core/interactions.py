@@ -55,6 +55,9 @@ def generate_interactions_table(triplete, data):
     df = pd.read_json
     df = pd.DataFrame(table_rows, columns=columns, index=index_labels)
 
+    percs = perc_usages_interact(df["Interazione"], data)
+    df["Copertura"] = percs
+
     return df
 
 
@@ -75,25 +78,8 @@ def perc_usages_interact(interaction, data):
     for i, key in enumerate(keys_order):
         total = len(usage_dict[key])
         unique = unique_counts[i]
-        percs.append(unique / total if total > 0 else 0)
-
-    # Print Usage Dict Totals
-    print(len(usage_dict["minimo"]))
-    print(len(usage_dict["medio"]))
-    print(len(usage_dict["medio_alto"]))
-    print(len(usage_dict["alto"]))
-
-    # Print Unique Usages (using pre-calculated values)
-    print(f"Unique usages minimo: {unique_counts[0]}")
-    print(f"Unique usages medio: {unique_counts[1]}")
-    print(f"Unique usages medio_alto: {unique_counts[2]}")
-    print(f"Unique usages alto: {unique_counts[3]}")
-
-    # Print Percentages
-    print(f"minimo: {percs[0]}")
-    print(f"medio: {percs[1]}")
-    print(f"medio_alto: {percs[2]}")
-    print(f"alto: {percs[3]}")
+        value = unique / total if total > 0 else 0
+        percs.append(round(value, 2))
 
     return percs
 

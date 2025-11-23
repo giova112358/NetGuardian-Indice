@@ -1,14 +1,43 @@
 // src/components/IndiceRischio.js
 import React, { useState } from 'react';
+import { fetchRepertoriNames, fetchInteractions } from '../api/client';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const IndiceRischio = () => {
   const [selection, setSelection] = useState("");
   const [savedValues, setSavedValues] = useState([]);
+  const [repertoriNames, setRepertoriNames] = useState([]);
+
+  const navigate = useNavigate(); 
+
+  const getRepertoriNames = async () => {
+    try {
+      const response = await fetchRepertoriNames();
+      setRepertoriNames(response);
+    } catch (error) {
+      console.error("Errore nel recupero dei nomi dei repertori:", error);
+    }
+  };
+
+  React.useEffect(() => {
+    getRepertoriNames();
+  }, []);
 
   const handleAdd = () => {
     if (selection) {
       setSavedValues([...savedValues, selection]);
-      setSelection(""); // Optional: Reset dropdown after adding
+      setSelection(""); 
+    }
+  };
+
+  const handleCalculate = async () => {
+    try {
+      const interactions = await fetchInteractions(savedValues);
+      
+      navigate('/risultato', { state: { data: interactions } });
+
+    } catch (error) {
+      console.error("Errore nel calcolo delle interazioni:", error);
     }
   };
 
@@ -32,10 +61,10 @@ const IndiceRischio = () => {
               value={selection} 
               onChange={(e) => setSelection(e.target.value)}
             >
-              <option value="" disabled>Scegli un valore...</option>
-              <option value="PZ">PZ</option>
-              <option value="VA">VA</option>
-              <option value="GZ">GZ</option>
+              <option value="" disabled>Scegli un repertorio...</option>
+              {repertoriNames.map((name, index) => (
+                <option key={index} value={name}>{name}</option>
+              ))}
             </select>
 
             <button 
@@ -45,9 +74,16 @@ const IndiceRischio = () => {
             >
               Aggiungi
             </button>
+            
+            <button 
+              className="btn-calc" 
+              onClick={handleCalculate}
+              disabled={savedValues.length < 3}
+            >
+              Calcola
+            </button>
           </div>
 
-          {/* Display the list only if there are items */}
           {savedValues.length > 0 && (
             <div className="risk-list-container">
               <h4 className="usage-title" style={{ marginTop: '2rem' }}>Valori Inseriti</h4>
