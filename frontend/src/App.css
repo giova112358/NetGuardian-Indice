@@ -179,3 +179,140 @@ body {
 .error {
   color: #e74c3c;
 }
+
+/* Navigation Menu */
+.app-nav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-bottom: 5px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* Risk Index Page Styles */
+.risk-container {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.risk-controls {
+  display: flex;
+  flex-direction: row; /* Stacked horizontally */
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.risk-select {
+  flex: 1; /* Distribute space evenly */
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.risk-select:hover,
+.risk-select:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+  background-color: #fff;
+}
+
+/* Responsive: Stack vertically on small screens */
+@media (max-width: 768px) {
+  .risk-controls {
+    flex-direction: column;
+  }
+}
+
+/* Risk Input Group (Aligns dropdown and button) */
+.risk-input-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Styled Button */
+.btn-add {
+  background-color: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-add:hover:not(:disabled) {
+  background-color: #2980b9; /* Slightly darker blue */
+  transform: translateY(-1px);
+}
+
+.btn-add:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Risk List Styling */
+.risk-list-container {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.risk-list-item {
+  background-color: #f8f9fa;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent-orange);
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--text-main);
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive adjustment */
+@media (max-width: 600px) {
+  .risk-input-group {
+    flex-direction: column;
+  }
+  .btn-add, .risk-select {
+    width: 100%;
+  }
+}

@@ -1,18 +1,29 @@
+// src/App.js
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import RepertorioGrid from './components/RepertorioGrid';
+import IndiceRischio from './components/IndiceRischio';
 
 function App() {
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>NetGuardian - Indice Repertori</h1>
-        <p>Visualizzazione interattiva della mappa dei repertori</p>
-      </header>
-      <main>
-        <RepertorioGrid />
-      </main>
-    </div>
+    <Router>
+      <div className="app">
+        <header className="app-header">
+          <h1>NetGuardian - Indice </h1>
+          <nav className="app-nav">
+            <Link to="/" className="nav-link">Mappa repertori</Link>
+            <Link to="/rischio" className="nav-link">Indice di rischio</Link>
+          </nav>
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<RepertorioGrid />} />
+            <Route path="/rischio" element={<IndiceRischio />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
