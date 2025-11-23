@@ -1,12 +1,13 @@
 import itertools
 import os
-from repertori import load_repertori
+from backend.core.repertori import load_repertori
 import random
 
 
 def generate_combos(path):
     """
     Generate all the possible triplettes of repertories
+
     Args:
         path: the file_path for the file with the list of rep
     Returns:
@@ -21,6 +22,14 @@ def generate_combos(path):
 
 
 def get_rand_combo(combos):
+    """
+    Random combinations of a triplette of repertoires
+
+    Args :
+        combos: the list of all possible combinations of repertoires
+    Return:
+        a random item of the list
+    """
     if not combos:
         return None
     return random.choice(combos)
