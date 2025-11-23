@@ -1,0 +1,181 @@
+:root {
+  --primary-bg: #f4f7f6;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --text-secondary: #666666;
+  --accent-blue: #3498db;
+  --accent-green: #2ecc71;
+  --accent-orange: #e67e22;
+  --border-radius: 12px;
+  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* Header */
+.app-header {
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.app-header p {
+  margin-top: 0.5rem;
+  opacity: 0.9;
+  font-size: 1.1rem;
+}
+
+/* Grid Layout */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Card Styling */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+.code-circle {
+  width: 50px;
+  height: 50px;
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.header-info {
+  flex-grow: 1;
+}
+
+.original-name {
+  margin: 0;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  color: var(--text-main);
+}
+
+/* Badges */
+.type-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 0.3rem;
+  letter-spacing: 0.5px;
+}
+
+.badge-green { background-color: rgba(46, 204, 113, 0.15); color: #27ae60; }
+.badge-blue { background-color: rgba(52, 152, 219, 0.15); color: #2980b9; }
+.badge-orange { background-color: rgba(230, 126, 34, 0.15); color: #d35400; }
+.badge-gray { background-color: #eee; color: #777; }
+
+/* Card Body & Usage */
+.card-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+.usage-title {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+}
+
+.usage-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.usage-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.level-name {
+  text-transform: capitalize;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.level-chars {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+.no-usage {
+  color: #aaa;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Loading & Error */
+.loading, .error {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.error {
+  color: #e74c3c;
+}
