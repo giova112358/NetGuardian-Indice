@@ -27,12 +27,10 @@ def load_repertori(path):
 
 
 if __name__ == "__main__":
-    data_path = "data"
-    file_name = "repertori_map.yaml"
-    file_path = os.path.join(data_path, file_name)
+    from config import REPERTORI_FILE
 
     print("\n--- Iterating Items ---")
-    repertori = load_repertori(file_path)
+    repertori = load_repertori(REPERTORI_FILE)
     for key, value in repertori.items():
         # Handle cases where 'usage' is None (null in YAML)
         has_usage = "Yes" if value["usage"] else "No"

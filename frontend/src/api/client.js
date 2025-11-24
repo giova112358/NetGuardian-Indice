@@ -27,6 +27,19 @@ export const fetchRepertoriNames = async () => {
   }
 };
 
+export const fetchRepertoriNtgNames = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/repertori/ntgnames`);
+    if (!response.ok) {
+      throw new Error("Errore nel recupero dei nomi dei repertori");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
 export const fetchInteractions = async (selectedRepertori) => {
   try {
     const response = await fetch(`${API_BASE_URL}/interactions/generate`, {

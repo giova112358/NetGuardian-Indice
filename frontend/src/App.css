@@ -407,3 +407,61 @@ body {
 .result-table tr.highlight-row:hover {
   background-color: rgba(201, 204, 46, 0.3) !important;
 }
+
+/* 1. UX: Visual Counter Logic */
+.counter-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-color: #eee;
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 1rem; /* Align with usage-title */
+  transition: all 0.3s ease;
+}
+
+.counter-badge.full {
+  background-color: rgba(46, 204, 113, 0.2); /* Green tint */
+  color: #27ae60;
+}
+
+/* 2. UX: List Item Layout (Flexbox to hold text and X button) */
+.risk-list-item {
+  display: flex; 
+  justify-content: space-between;
+  align-items: center;
+  /* Keep existing styles below */
+  background-color: #f8f9fa;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--accent-orange);
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  color: var(--text-main);
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* 3. UX: Remove Button Styling */
+.btn-remove {
+  background: none;
+  border: none;
+  color: #e74c3c; /* Red to indicate deletion */
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.6;
+  padding: 0 0 0 1rem;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-remove:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Optional: Add transition to the select when disabled */
+.risk-select:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  opacity: 0.8;
+}

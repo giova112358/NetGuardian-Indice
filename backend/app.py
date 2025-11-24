@@ -13,7 +13,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include the routers we defined
 app.include_router(repertori_router.router)
 app.include_router(interactions_router.router)
 
