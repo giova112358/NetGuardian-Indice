@@ -21,6 +21,7 @@
                 "8000"
             ],
             "console": "integratedTerminal",
+            "python": "${workspaceFolder}/.venv/Scripts/python.exe",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"
             },

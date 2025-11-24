@@ -47,13 +47,13 @@ const IndiceRischio = () => {
         <div className="card-header">
           <div className="code-circle" style={{ backgroundColor: '#e67e22' }}>R</div>
           <div className="header-info">
-            <h3 className="original-name">Calcolo Indice</h3>
+            <h3 className="original-name">Calcolo Interazione</h3>
             <span className="type-badge badge-orange">Input Dati</span>
           </div>
         </div>
         
         <div className="card-body">
-          <h4 className="usage-title">Seleziona Parametro</h4>
+          <h4 className="usage-title">Seleziona Repertorio</h4>
           
           <div className="risk-input-group">
             <select 

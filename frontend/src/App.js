@@ -14,7 +14,7 @@ function App() {
           <h1>NetGuardian - Indice </h1>
           <nav className="app-nav">
             <Link to="/" className="nav-link">Mappa repertori</Link>
-            <Link to="/rischio" className="nav-link">Indice di rischio</Link>
+            <Link to="/rischio" className="nav-link">Interazioni</Link>
           </nav>
         </header>
         <main>
