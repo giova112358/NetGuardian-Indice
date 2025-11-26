@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.routers import repertori_router, interactions_router
+from backend.routers import repertori_router, interactions_router, misure_router
 from fastapi.middleware.cors import CORSMiddleware
 
 # Initialize the API
@@ -15,6 +15,7 @@ app.add_middleware(
 
 app.include_router(repertori_router.router)
 app.include_router(interactions_router.router)
+app.include_router(misure_router.router)
 
 
 @app.get("/")

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { fetchRepertoriNtgNames, fetchInteractions } from '../api/client';
 import { useNavigate } from 'react-router-dom'; 
 
-const IndiceRischio = () => {
+const Interazioni = () => {
   const [selection, setSelection] = useState("");
   const [savedValues, setSavedValues] = useState([]);
   const [repertoriNames, setRepertoriNames] = useState([]);
@@ -133,4 +133,4 @@ const IndiceRischio = () => {
   );
 };
 
-export default IndiceRischio;
+export default Interazioni;

@@ -12,3 +12,8 @@ class Repertorio(BaseModel):
 # Request body for generating interactions
 class InteractionRequest(BaseModel):
     triplet: List[str]
+
+
+# Request body for indice calculation
+class IndiceRequest(BaseModel):
+    repertori: List[str]

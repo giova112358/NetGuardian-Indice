@@ -59,3 +59,22 @@ export const fetchInteractions = async (selectedRepertori) => {
     throw error;
   }
 };
+
+export const fetchMisure = async (selectedRepertori) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/indice/misure`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ repertori: selectedRepertori }), 
+    });
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle misure");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("API Error:", error);
+    throw error;
+  }
+};
+
