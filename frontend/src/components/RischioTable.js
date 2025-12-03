@@ -12,7 +12,7 @@ const RiskResult = () => {
         <div className="card risk-card">
           <div className="card-body" style={{ textAlign: 'center' }}>
             <h3>Nessun risultato disponibile</h3>
-            <Link to="/rischio" className="btn-add" style={{ textDecoration: 'none' }}>
+            <Link to="/interazioni" className="btn-add" style={{ textDecoration: 'none' }}>
               Torna al calcolo
             </Link>
           </div>
@@ -78,7 +78,7 @@ const RiskResult = () => {
           </div>
           
           <div style={{ marginTop: '2rem', textAlign: 'right' }}>
-             <Link to="/rischio" className="btn-add" style={{ textDecoration: 'none', display: 'inline-block' }}>
+             <Link to="/interazioni" className="btn-add" style={{ textDecoration: 'none', display: 'inline-block' }}>
                Nuovo Calcolo
             </Link>
           </div>
