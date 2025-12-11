@@ -69,7 +69,7 @@ def share_usage(repertoires):
     """
     Calculates the shared usage of GZ for a list of repertoires.
     """
-    if "GZ" in repertoires and ("CF" not in repertoires or "CA" not in repertoires):
+    if "GZ" in repertoires and ("CF" not in repertoires and "CA" not in repertoires):
         return False
     return True
 
