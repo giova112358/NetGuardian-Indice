@@ -34,5 +34,7 @@ def generate_table(
         raise HTTPException(status_code=500, detail=str(e))
 
     # Convert Pandas DataFrame to a JSON-friendly format
+    if df is None:
+        return {}
     result = df.to_dict(orient="index")
     return result

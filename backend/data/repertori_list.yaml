@@ -1,7 +1,11 @@
 repertori:
   - original: anticipazione
     abbreviation: AN
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
     type: generativo
   - original: causa
     abbreviation: CA
@@ -29,7 +33,11 @@ repertori:
     type: ibrido
   - original: considerazione
     abbreviation: CO
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
     type: generativo
   - original: contrapposizione
     abbreviation: CT
@@ -41,10 +49,19 @@ repertori:
     type: mantenimento
   - original: deresponsabilizzazione
     abbreviation: DR
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
     type: mantenimento
   - original: descrizione
     abbreviation: DS
+    usage:
+      minimo: [e]
+      medio: []
+      medio_alto: []
+      alto: []
     type: generativo
   - original: dichiarazione di intenti
     abbreviation: DI
@@ -72,7 +89,11 @@ repertori:
     type: mantenimento
   - original: giustificazione
     abbreviation: GI
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
     type: mantenimento
   - original: implicazione
     abbreviation: IM
@@ -124,7 +145,11 @@ repertori:
     type: mantenimento
   - original: proposta
     abbreviation: PR
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
     type: generativo
   - original: ridimensionamento
     abbreviation: RI
@@ -136,7 +161,11 @@ repertori:
     type: ibrido
   - original: sancire
     abbreviation: SR
-    usage: null
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [b]
+      alto: [a]
     type: mantenimento
   - original: specificazione
     abbreviation: SP

@@ -1,6 +1,6 @@
 // src/components/IndiceRischio.js
 import React, { useState } from 'react';
-import { fetchRepertoriNtgNames, fetchInteractions } from '../api/client';
+import { fetchRepertoriNames, fetchInteractions } from '../api/client';
 import { useNavigate } from 'react-router-dom'; 
 
 const Interazioni = () => {
@@ -14,7 +14,7 @@ const Interazioni = () => {
 
   const getRepertoriNames = async () => {
     try {
-      const response = await fetchRepertoriNtgNames();
+      const response = await fetchRepertoriNames();
       setRepertoriNames(response);
     } catch (error) {
       console.error("Errore nel recupero dei nomi dei repertori:", error);

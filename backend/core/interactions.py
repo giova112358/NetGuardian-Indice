@@ -16,6 +16,10 @@ def generate_interactions_table(triplete, data):
 
     selected_keys = list(triplete)
 
+    null_set = {"AN", "CO", "DR", "PR", "GI"}
+    if len(set(selected_keys) & set(null_set)) >= 2:
+        return None
+
     # Define the rows we want (usage levels)
     levels = ["minimo", "medio", "medio_alto", "alto"]
     table_rows = []
@@ -55,13 +59,22 @@ def generate_interactions_table(triplete, data):
     df = pd.read_json
     df = pd.DataFrame(table_rows, columns=columns, index=index_labels)
 
-    percs = perc_usages_interact(df["Interazione"], data)
+    percs = perc_usages_interact(df["Interazione"], data, selected_keys)
     df["Copertura"] = percs
 
     return df
 
 
-def perc_usages_interact(interaction, data):
+def share_usage(repertoires):
+    """
+    Calculates the shared usage of GZ for a list of repertoires.
+    """
+    if "GZ" in repertoires and ("CF" not in repertoires or "CA" not in repertoires):
+        return False
+    return True
+
+
+def perc_usages_interact(interaction, data, triplets):
     """
     Calculates and prints the percentage of interactions per level.
     Optimized to use .iloc to avoid FutureWarnings and reduce redundant calculations.
@@ -80,6 +93,9 @@ def perc_usages_interact(interaction, data):
         unique = unique_counts[i]
         value = unique / total if total > 0 else 0
         percs.append(round(value, 2))
+
+    if not share_usage(triplets):
+        percs[-1] = 0.0  # Set 'alto' level to 0 if GZ sharing condition is not met
 
     return percs
 

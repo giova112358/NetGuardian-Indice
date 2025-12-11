@@ -27,7 +27,7 @@ const IndiceResult = () => {
   const repertori = data.repertori || data.Repertori || [];
   const spostamento = data.Spostamento || data.spostamento || 0;
   const stazionarieta = data.Stazionarietà || data.stazionarieta || 0;
-  const misuraErc = data['Misura ERC'] || data.misuraErc || 0;
+  const misuraErc = data['Misura ERC'] || data.misura_erc || 0;
 
   return (
     <div className="risk-container">

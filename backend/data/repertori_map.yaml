@@ -2,7 +2,11 @@ repertori:
   AN:
     original: anticipazione
     type: generativo
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
   CA:
     original: causa
     type: mantenimento
@@ -30,7 +34,11 @@ repertori:
   CO:
     original: considerazione
     type: generativo
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
   CT:
     original: contrapposizione
     type: mantenimento
@@ -42,11 +50,19 @@ repertori:
   DR:
     original: deresponsabilizzazione
     type: mantenimento
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
   DS:
     original: descrizione
     type: generativo
-    usage: null
+    usage:
+      minimo: [e]
+      medio: []
+      medio_alto: []
+      alto: []
   DI:
     original: dichiarazione di intenti
     type: ibrido
@@ -74,7 +90,11 @@ repertori:
   GI:
     original: giustificazione
     type: mantenimento
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
   IM:
     original: implicazione
     type: ibrido
@@ -126,7 +146,11 @@ repertori:
   PR:
     original: proposta
     type: generativo
-    usage: null
+    usage:
+      minimo: []
+      medio: []
+      medio_alto: []
+      alto: []
   RI:
     original: ridimensionamento
     type: ibrido
@@ -138,7 +162,11 @@ repertori:
   SR:
     original: sancire
     type: mantenimento
-    usage: null
+    usage:
+      minimo: [a]
+      medio: [a]
+      medio_alto: [b]
+      alto: [a]
   SP:
     original: specificazione
     type: ibrido
