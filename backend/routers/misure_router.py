@@ -19,14 +19,14 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
     repertori = request.repertori
 
     # Calculate levels
-    livelli = calcolo_livelli(repertori)
+    livelli, triplets = calcolo_livelli(repertori)
 
     # Calculate spostamento
-    spostamento = calcolo_spostamento(livelli)
+    spostamento, differenza, direzione = calcolo_spostamento(livelli)
     # spostamento = 0.0
 
     # Calculate stazionarietà
-    stazionarieta = calcolo_stazionarieta(livelli)
+    stazionarieta, ripetizioni = calcolo_stazionarieta(livelli)
     # stazionarieta = 0.0
 
     # Calculate misura_erc
@@ -37,6 +37,11 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
 
     # Return calculations
     return {
+        "triplette": triplets,
+        "livelli": livelli,
+        "differenze": differenza,
+        "direzioni": direzione,
+        "ripetizioni": ripetizioni,
         "spostamento": spostamento,
         "stazionarieta": stazionarieta,
         "misura_erc": misura_erc,

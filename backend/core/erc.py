@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Any, List
+from typing import Any, List, Tuple, Dict
 from itertools import groupby
 from backend.core.interactions import generate_interactions_table
 from backend.config import REPERTORI_FILE
@@ -85,10 +85,10 @@ def calcolo_livelli(repertori: List[Any]):
     print(f"Levels: {levels}")
     print("")
 
-    return levels
+    return levels, results
 
 
-def calcolo_spostamento(livelli: List[int]) -> float:
+def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]]:
     """
     Spostamento calculation based on levels.
 
@@ -126,10 +126,10 @@ def calcolo_spostamento(livelli: List[int]) -> float:
     spostamenti = np.array(direzione) * np.array(distanza)
     spostamento = np.sum(spostamenti)
 
-    return float(spostamento)
+    return float(spostamento), differenza, direzione
 
 
-def calcolo_stazionarieta(livelli: List[int]) -> float:
+def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
     """
     Stazionarietà calculation based on levels.
 
@@ -147,7 +147,7 @@ def calcolo_stazionarieta(livelli: List[int]) -> float:
     print(f"Ripetizioni consecutive: {ripetizioni}")
     print("")
 
-    chi = {0: 0, 1: 1, 2: 2, 3: 3, 4: 4}
+    chi = {0: 0, 1: 5.5, 2: 4.9, 3: 4.3, 4: 4.1}
 
     temp = []
     for key, value in ripetizioni.items():
@@ -157,7 +157,7 @@ def calcolo_stazionarieta(livelli: List[int]) -> float:
     print("")
     stazionarieta = sum(temp)
 
-    return float(stazionarieta)
+    return float(stazionarieta), ripetizioni
 
 
 if __name__ == "__main__":

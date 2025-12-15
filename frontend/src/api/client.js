@@ -1,6 +1,6 @@
 // src/api/client.js
-//const API_BASE_URL = "http://localhost:8000";
-const API_BASE_URL = "/api";
+const API_BASE_URL = "http://localhost:8000";
+//const API_BASE_URL = "/api";
 
 export const fetchRepertori = async () => {
   try {

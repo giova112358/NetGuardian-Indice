@@ -24,6 +24,10 @@ const IndiceResult = () => {
 
   // Destructure expected data. 
   // We handle potential casing differences or missing keys safely.
+  const livelli = data.livelli;
+  const differenze = data.differenze;
+  const direzioni = data.direzioni;
+  const ripetizioni = data.ripetizioni;
   const repertori = data.repertori || data.Repertori || [];
   const spostamento = data.Spostamento || data.spostamento || 0;
   const stazionarieta = data.Stazionarietà || data.stazionarieta || 0;
@@ -81,34 +85,63 @@ const IndiceResult = () => {
 
           <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
 
-          {/* Section 2: Metrics Cards */}
+          {/* Section 2: Indicatori Intermedi */}
           <div>
-            <h4 className="usage-title">Indicatori Calcolati</h4>
+            <h4 className="usage-title">Indicatori Intermedi</h4>
             <div style={{ 
               display: 'grid', 
               gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
               gap: '1.5rem',
               marginTop: '1rem'
             }}>
-              {/* Card 1: Spostamento */}
+              <ListMetricCard 
+                label="Livelli" 
+                values={livelli || []} 
+                color="#9b59b6"
+              />
+              <ListMetricCard 
+                label="Differenza" 
+                values={differenze || []} 
+                color="#3498db"
+              />
+              <ListMetricCard 
+                label="Direzione" 
+                values={direzioni || []} 
+                color="#1abc9c"
+              />
+              <DictMetricCard 
+                label="Ripetizioni" 
+                data={ripetizioni || {}} 
+                color="#e67e22"
+              />
+            </div>
+          </div>
+
+          <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
+
+          {/* Section 3: Indicatori Finali */}
+          <div>
+            <h4 className="usage-title">Indicatori Finali</h4>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+              gap: '1.5rem',
+              marginTop: '1rem'
+            }}>
               <MetricCard 
                 label="Spostamento" 
                 value={spostamento} 
-                color="#e74c3c" // Red/Orange accent
+                color="#e74c3c"
               />
-              
-              {/* Card 2: Stazionarietà */}
               <MetricCard 
                 label="Stazionarietà" 
                 value={stazionarieta} 
-                color="#f39c12" // Yellow/Orange accent
+                color="#f39c12"
               />
-              
-              {/* Card 3: Misura ERC */}
               <MetricCard 
                 label="Misura ERC" 
                 value={misuraErc} 
-                color="#2ecc71" // Green accent
+                color="#2ecc71"
               />
             </div>
           </div>
@@ -157,6 +190,131 @@ const MetricCard = ({ label, value, color }) => (
     }}>
       {/* Format number to max 3 decimals if it's a number */}
       {typeof value === 'number' ? value.toLocaleString('it-IT', { maximumFractionDigits: 3 }) : value}
+    </div>
+  </div>
+);
+
+// Helper Sub-component for dictionary-based metric cards (e.g., ripetizioni)
+const DictMetricCard = ({ label, data, color }) => {
+  const entries = Object.entries(data);
+  return (
+    <div style={{
+      backgroundColor: '#fff',
+      border: '1px solid #e0e0e0',
+      borderRadius: '12px',
+      padding: '1.5rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.02)',
+      transition: 'transform 0.2s',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+      <h5 style={{ 
+        margin: '0 0 1rem 0', 
+        color: '#666', 
+        textTransform: 'uppercase', 
+        fontSize: '0.85rem',
+        letterSpacing: '1px'
+      }}>
+        {label}
+      </h5>
+      <div style={{ 
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6px',
+        width: '100%'
+      }}>
+        {entries.length > 0 ? (
+          entries.map(([key, value], idx) => (
+            <div 
+              key={idx}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                backgroundColor: '#f8f9fa',
+                borderRadius: '6px',
+                padding: '0.5rem'
+              }}
+            >
+              <span style={{
+                color: '#666',
+                fontSize: '0.9rem',
+                fontWeight: '500'
+              }}>
+                Livello {key}
+              </span>
+              <span style={{
+                backgroundColor: `${color}20`,
+                color: color,
+                border: `1px solid ${color}40`,
+                borderRadius: '6px',
+                padding: '0.25rem 0.6rem',
+                fontFamily: 'Courier New, monospace',
+                fontWeight: 'bold',
+                fontSize: '0.95rem'
+              }}>
+                {value}
+              </span>
+            </div>
+          ))
+        ) : (
+          <span style={{ color: '#ccc', fontStyle: 'italic', textAlign: 'center' }}>—</span>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Helper Sub-component for list-based metric cards
+const ListMetricCard = ({ label, values, color }) => (
+  <div style={{
+    backgroundColor: '#fff',
+    border: '1px solid #e0e0e0',
+    borderRadius: '12px',
+    padding: '1.5rem',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.02)',
+    transition: 'transform 0.2s',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }}>
+    <h5 style={{ 
+      margin: '0 0 1rem 0', 
+      color: '#666', 
+      textTransform: 'uppercase', 
+      fontSize: '0.85rem',
+      letterSpacing: '1px'
+    }}>
+      {label}
+    </h5>
+    <div style={{ 
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '8px',
+      justifyContent: 'center'
+    }}>
+      {values.length > 0 ? (
+        values.map((val, idx) => (
+          <span 
+            key={idx}
+            style={{
+              backgroundColor: `${color}20`,
+              color: color,
+              border: `1px solid ${color}40`,
+              borderRadius: '6px',
+              padding: '0.4rem 0.8rem',
+              fontFamily: 'Courier New, monospace',
+              fontWeight: 'bold',
+              fontSize: '1rem'
+            }}
+          >
+            {typeof val === 'number' ? val.toLocaleString('it-IT', { maximumFractionDigits: 3 }) : val}
+          </span>
+        ))
+      ) : (
+        <span style={{ color: '#ccc', fontStyle: 'italic' }}>—</span>
+      )}
     </div>
   </div>
 );
