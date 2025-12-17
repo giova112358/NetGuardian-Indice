@@ -32,6 +32,7 @@ const IndiceResult = () => {
   const spostamento = data.Spostamento || data.spostamento || 0;
   const stazionarieta = data.Stazionarietà || data.stazionarieta || 0;
   const misuraErc = data['Misura ERC'] || data.misura_erc || 0;
+  const triplette = data.triplette || [];
 
   return (
     <div className="risk-container">
@@ -83,6 +84,7 @@ const IndiceResult = () => {
             </div>
           </div>
 
+
           <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
 
           {/* Section 2: Indicatori Intermedi */}
@@ -114,6 +116,57 @@ const IndiceResult = () => {
                 data={ripetizioni || {}} 
                 color="#e67e22"
               />
+            </div>
+          </div>
+
+          {/* Section 2.5: Triplette Dettaglio */}
+          <div style={{ margin: '2.5rem 0' }}>
+            <h4 className="usage-title">Dettaglio Triplette</h4>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '1.5rem',
+              marginTop: '1rem',
+            }}>
+              {triplette.length > 0 ? (
+                triplette.map((obj, idx) => (
+                  <div key={idx} style={{
+                    backgroundColor: '#fff',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '12px',
+                    padding: '1.2rem',
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.02)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                  }}>
+                    <div style={{ fontWeight: 600, color: '#2980b9', marginBottom: '0.5rem', fontSize: '1.05rem' }}>
+                      Triplet: <span style={{ fontFamily: 'Courier New, monospace', color: '#34495e' }}>{obj.triplet.join(', ')}</span>
+                    </div>
+                    <div style={{ color: '#666', fontSize: '0.95rem', marginBottom: '0.3rem' }}>Livelli associati:</div>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {obj.levels && obj.levels.length > 0 ? (
+                        obj.levels.map((lvl, lidx) => (
+                          <span key={lidx} style={{
+                            backgroundColor: '#9b59b620',
+                            color: '#9b59b6',
+                            border: '1px solid #9b59b640',
+                            borderRadius: '6px',
+                            padding: '0.3rem 0.7rem',
+                            fontFamily: 'Courier New, monospace',
+                            fontWeight: 'bold',
+                            fontSize: '1rem',
+                          }}>{lvl}</span>
+                        ))
+                      ) : (
+                        <span style={{ color: '#ccc', fontStyle: 'italic' }}>—</span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <span style={{ color: '#ccc', fontStyle: 'italic' }}>Nessuna tripletta calcolata</span>
+              )}
             </div>
           </div>
 

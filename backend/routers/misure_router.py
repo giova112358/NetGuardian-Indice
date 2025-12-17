@@ -37,7 +37,7 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
 
     # Return calculations
     return {
-        "triplette": triplets,
+        "triplette": triplets,  
         "livelli": livelli,
         "differenze": differenza,
         "direzioni": direzione,

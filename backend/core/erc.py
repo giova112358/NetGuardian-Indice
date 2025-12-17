@@ -73,7 +73,7 @@ def calcolo_livelli(repertori: List[Any]):
         max_levels = df[df["Copertura"] == max_value].index.tolist()
 
         # Store in dictionary
-        results[triplet] = max_levels
+        results[tuple(triplet)] = max_levels
 
         mapping = {"Minimo": 1, "Medio": 2, "Medio-alto": 3, "Alto": 4}
         mapped_levels = [mapping.get(l, l) for l in max_levels]
@@ -85,7 +85,12 @@ def calcolo_livelli(repertori: List[Any]):
     print(f"Levels: {levels}")
     print("")
 
-    return levels, results
+    # Convert results dict to a list of objects for JSON compatibility
+    results_list = [
+        {"triplet": list(triplet), "levels": levels}
+        for triplet, levels in results.items()
+    ]
+    return levels, results_list
 
 
 def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]]:
