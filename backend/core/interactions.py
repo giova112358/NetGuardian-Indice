@@ -92,10 +92,24 @@ def perc_usages_interact(interaction, data, triplets):
         total = len(usage_dict[key])
         unique = unique_counts[i]
         value = unique / total if total > 0 else 0
-        percs.append(round(value, 2))
 
-    if not share_usage(triplets):
-        percs[-1] = 0.0  # Set 'alto' level to 0 if GZ sharing condition is not met
+        # If GZ is in the triplets, check for usage intersection
+        if "GZ" in triplets:
+            # Get GZ usages for the current level
+            gz_usages = set(data["GZ"]["usage"].get(key, []))
+
+            # Get usages of other repertoires in the triplet for the current level
+            other_repertoires = [r for r in triplets if r != "GZ"]
+            other_usages_list = []
+            for r in other_repertoires:
+                other_usages_list.extend(data[r]["usage"].get(key, []))
+            other_usages = set(other_usages_list)
+
+            # If there is no intersection, set the percentage to 0
+            if len(gz_usages) != 0 and not gz_usages.intersection(other_usages):
+                value = 0
+
+        percs.append(round(value, 2))
 
     return percs
 

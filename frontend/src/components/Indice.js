@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchRepertoriNames, fetchMisure } from '../api/client';
+import { fetchRepertoriNtgNames, fetchMisure } from '../api/client';
 import { useNavigate } from 'react-router-dom'; 
 
 const Indice = () => {
@@ -11,7 +11,7 @@ const Indice = () => {
 
   const getRepertoriNames = async () => {
     try {
-      const response = await fetchRepertoriNames();
+      const response = await fetchRepertoriNtgNames();
       setRepertoriNames(response);
     } catch (error) {
       console.error("Errore nel recupero dei nomi dei repertori:", error);

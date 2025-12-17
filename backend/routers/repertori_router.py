@@ -21,7 +21,7 @@ def list_repertori_names(data: dict = Depends(get_repertori_data)):
 @router.get("/ntgnames", response_model=List[str])
 def list_repertori_names(data: dict = Depends(get_repertori_data)):
     """Get all repertories names."""
-    names = [name for name in data.keys() if data[name].get("usage") is not None]
+    names = [name for name in data.keys() if name not in ["AN", "CO", "DR", "PR", "GI"]]
     return names
 
 
