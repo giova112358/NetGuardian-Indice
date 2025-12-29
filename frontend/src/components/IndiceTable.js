@@ -23,9 +23,8 @@ const IndiceResult = () => {
   }
 
   // Destructure expected data. 
-  // We handle potential casing differences or missing keys safely.
   const livelli = data.livelli;
-  const differenze = data.differenze;
+  const distanze = data.distanze;
   const direzioni = data.direzioni;
   const ripetizioni = data.ripetizioni;
   const repertori = data.repertori || data.Repertori || [];
@@ -84,7 +83,6 @@ const IndiceResult = () => {
             </div>
           </div>
 
-
           <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
 
           {/* Section 2: Indicatori Intermedi */}
@@ -102,8 +100,8 @@ const IndiceResult = () => {
                 color="#9b59b6"
               />
               <ListMetricCard 
-                label="Differenza" 
-                values={differenze || []} 
+                label="Differenza MD" 
+                values={distanze || []} 
                 color="#3498db"
               />
               <ListMetricCard 
@@ -191,12 +189,15 @@ const IndiceResult = () => {
                 value={stazionarieta} 
                 color="#f39c12"
               />
-              <MetricCard 
-                label="Misura ERC" 
-                value={misuraErc} 
-                color="#2ecc71"
-              />
             </div>
+          </div>
+
+          <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
+
+          {/* Section 4: Risk Meter Visualization */}
+          <div style={{ marginBottom: '2.5rem' }}>
+            <h4 className="usage-title">Valutazione del Rischio</h4>
+            <RiskMeter value={misuraErc} />
           </div>
 
           {/* Footer Action */}
@@ -210,6 +211,155 @@ const IndiceResult = () => {
     </div>
   );
 };
+
+// Risk Meter Component with Visual Gauge
+const RiskMeter = ({ value }) => {
+  // Determine risk level and color based on value
+  const getRiskLevel = (val) => {
+    if (val < 0.5) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
+    if (val < 0.8) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
+    if (val < 0.95) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
+    return { level: 'Critico', color: '#e74c3c', bgColor: 'rgba(231, 76, 60, 0.15)' };
+  };
+
+  const risk = getRiskLevel(value);
+  const maxValue = 1; // Adjust based on your scale
+  const percentage = Math.min((value / maxValue) * 100, 100);
+
+  return (
+    <div style={{
+      backgroundColor: '#fff',
+      border: '1px solid #e0e0e0',
+      borderRadius: '12px',
+      padding: '2rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.02)',
+    }}>
+      {/* Value Display */}
+      <div style={{ 
+        textAlign: 'center', 
+        marginBottom: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '1rem'
+      }}>
+        <div style={{ 
+          fontSize: '3.5rem', 
+          fontWeight: '700', 
+          color: risk.color,
+          fontFamily: 'Segoe UI, Roboto, sans-serif',
+          lineHeight: '1'
+        }}>
+          {typeof value === 'number' ? value.toLocaleString('it-IT', { maximumFractionDigits: 3 }) : value}
+        </div>
+        <div style={{
+          backgroundColor: risk.bgColor,
+          color: risk.color,
+          padding: '0.5rem 1.5rem',
+          borderRadius: '20px',
+          fontSize: '1.1rem',
+          fontWeight: '600',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          border: `2px solid ${risk.color}40`
+        }}>
+          Rischio {risk.level}
+        </div>
+      </div>
+
+      {/* Progress Bar with Risk Zones */}
+      <div style={{ position: 'relative', marginTop: '1rem' }}>
+        {/* Background with colored zones */}
+        <div style={{
+          height: '40px',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          display: 'flex',
+          border: '1px solid #e0e0e0'
+        }}>
+          <div style={{ flex: '25%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
+        </div>
+
+        {/* Filled Progress */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '40px',
+          width: `${percentage}%`,
+          backgroundColor: risk.color,
+          borderRadius: '20px',
+          transition: 'width 0.5s ease',
+          boxShadow: `0 2px 8px ${risk.color}40`
+        }} />
+
+        {/* Indicator Marker */}
+        <div style={{
+          position: 'absolute',
+          top: '-8px',
+          left: `${percentage}%`,
+          transform: 'translateX(-50%)',
+          width: '4px',
+          height: '56px',
+          backgroundColor: '#2c3e50',
+          borderRadius: '2px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+        }} />
+      </div>
+
+      {/* Scale Labels */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '0.5rem',
+        fontSize: '0.85rem',
+        color: '#999',
+        fontWeight: '600'
+      }}>
+        <span>0</span>
+        <span>0.5</span>
+        <span>0.8</span>
+        <span>0.95</span>
+        <span>1</span>
+      </div>
+
+      {/* Legend */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+        gap: '0.75rem',
+        marginTop: '1.5rem',
+        paddingTop: '1.5rem',
+        borderTop: '1px solid #f0f0f0'
+      }}>
+        <LegendItem color="#2ecc71" label="Basso" range="0-3" />
+        <LegendItem color="#f39c12" label="Medio" range="3-6" />
+        <LegendItem color="#e67e22" label="Alto" range="6-9" />
+        <LegendItem color="#e74c3c" label="Critico" range="9+" />
+      </div>
+    </div>
+  );
+};
+
+// Legend Item Component
+const LegendItem = ({ color, label, range }) => (
+  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+    <div style={{
+      width: '16px',
+      height: '16px',
+      backgroundColor: color,
+      borderRadius: '4px',
+      flexShrink: 0
+    }} />
+    <div style={{ fontSize: '0.85rem' }}>
+      <div style={{ fontWeight: '600', color: '#333' }}>{label}</div>
+      <div style={{ color: '#999', fontSize: '0.75rem' }}>{range}</div>
+    </div>
+  </div>
+);
 
 // Helper Sub-component for consistent metric cards
 const MetricCard = ({ label, value, color }) => (
@@ -241,7 +391,6 @@ const MetricCard = ({ label, value, color }) => (
       color: color,
       fontFamily: 'Segoe UI, Roboto, sans-serif'
     }}>
-      {/* Format number to max 3 decimals if it's a number */}
       {typeof value === 'number' ? value.toLocaleString('it-IT', { maximumFractionDigits: 3 }) : value}
     </div>
   </div>

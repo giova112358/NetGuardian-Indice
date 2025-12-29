@@ -117,12 +117,8 @@ def perc_usages_interact(interaction, data, triplets):
 if __name__ == "__main__":
     import os
 
-    data_path = "data"
-    file_name = "repertori_map.yaml"
-    file_path = os.path.join(data_path, file_name)
-
     triplete = ("PZ", "CF", "VA")
-    data = load_repertori(file_path)
+    data = load_repertori()
     # Run the function
     df_result = generate_interactions_table(triplete, data)
 

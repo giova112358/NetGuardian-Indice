@@ -2,8 +2,8 @@ import numpy as np
 from typing import Any, List, Tuple, Dict
 from itertools import groupby
 from backend.core.interactions import generate_interactions_table
-from backend.config import REPERTORI_FILE
-from backend.core.repertori import load_repertori
+
+from backend.core.repertori import load_repertori, load_momento_dialogico
 
 
 def get_triplets(input_list):
@@ -46,7 +46,7 @@ def calcolo_livelli(repertori: List[Any]):
     Returns:
         List of levels corresponding to each triplet.
     """
-    repertori_data = load_repertori(REPERTORI_FILE)
+    repertori_data = load_repertori()
 
     # Get all triplets
     triplets = get_triplets(repertori)
@@ -105,7 +105,16 @@ def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]
     # Differenza
     differenza = [livelli[i + 1] - livelli[i] for i in range(len(livelli) - 1)]
 
+    # Differenza momenti dialogici
+    momento_dialogico = load_momento_dialogico()
+    livelli_momento = [momento_dialogico.get(level, 0) for level in livelli]
+    differenza_momento = [
+        abs(livelli_momento[i + 1] - livelli_momento[i])
+        for i in range(len(livelli_momento) - 1)
+    ]
+
     print(f"Differenza: {differenza}")
+    print(f"Differenza Momenti Dialogici: {differenza_momento}")
     print("")
 
     # Direzione
@@ -122,7 +131,7 @@ def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]
     print("")
 
     # Distanza
-    distanza = [d**2 for d in differenza]
+    distanza = [abs(d) for d in differenza_momento]
 
     print(f"Distanza: {distanza}")
     print("")
@@ -131,7 +140,7 @@ def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]
     spostamenti = np.array(direzione) * np.array(distanza)
     spostamento = np.sum(spostamenti)
 
-    return float(spostamento), differenza, direzione
+    return float(spostamento), distanza, direzione
 
 
 def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
@@ -152,7 +161,13 @@ def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
     print(f"Ripetizioni consecutive: {ripetizioni}")
     print("")
 
-    chi = {0: 0, 1: 5.5, 2: 4.9, 3: 4.3, 4: 4.1}
+    momento_dialogico = load_momento_dialogico()
+    epsilon = 1e-1
+
+    md_values = list(momento_dialogico.values())
+    md_min, md_max = min(md_values), max(md_values)
+    chi = {k: (md_max - v) / (md_max - md_min) 
+            for k, v in momento_dialogico.items()}
 
     temp = []
     for key, value in ripetizioni.items():
@@ -163,6 +178,23 @@ def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
     stazionarieta = sum(temp)
 
     return float(stazionarieta), ripetizioni
+
+def normalize_erc_sigmoid(S, T, alpha, beta, scale=1.0):
+    """
+    Normalizza S e T con sigmoid per ottenere ERC_normalized ∈ [0, 1]
+    
+    Args:
+        S: spostamento totale (può essere negativo)
+        T: stazionarietà totale (sempre positiva)
+        alpha, beta: parametri di calibrazione
+        scale: fattore di scaling per controllo della curvatura
+    
+    Returns:
+        ERC_normalized: valore tra 0 e 1
+    """
+    ERC = alpha * S + beta * T
+    # Applica sigmoid con scaling
+    return 1 / (1 + np.exp(-ERC / scale))
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from backend.core.repertori import load_repertori
 import random
 
 
-def generate_combos(path):
+def generate_combos():
     """
     Generate all the possible triplettes of repertories
 
@@ -13,7 +13,7 @@ def generate_combos(path):
     Returns:
         combos: all the possible combination of three rep
     """
-    repertori = load_repertori(path)
+    repertori = load_repertori()
     rep_list = [*repertori]
 
     # Generate all combinations of 3 elements
@@ -36,12 +36,7 @@ def get_rand_combo(combos):
 
 
 if __name__ == "__main__":
-    data_path = "data"
-    file_name = "repertori_map.yaml"
-
-    file_path = os.path.join(data_path, file_name)
-
-    combos = generate_combos(file_path)
+    combos = generate_combos()
 
     print(f"Total combinations found: {len(combos)}")
     for combo in combos:

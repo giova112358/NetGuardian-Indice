@@ -27,12 +27,8 @@ def get_usage_sets(repertori):
 
 
 if __name__ == "__main__":
-    data_path = "data"
-    file_name = "repertori_map.yaml"
-    file_path = os.path.join(data_path, file_name)
-
     # Load data
-    repertori_data = load_repertori(file_path)
+    repertori_data = load_repertori()
 
     # Process data
     results = get_usage_sets(repertori_data)

@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from backend.schemas import IndiceRequest
 from backend.dependencies import get_repertori_data
-from backend.core.interactions import generate_interactions_table
-from backend.core.erc import calcolo_livelli, calcolo_spostamento, calcolo_stazionarieta
+from backend.core.erc import calcolo_livelli, calcolo_spostamento, calcolo_stazionarieta, normalize_erc_sigmoid
 import pandas as pd
 import json
 
@@ -22,7 +21,7 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
     livelli, triplets = calcolo_livelli(repertori)
 
     # Calculate spostamento
-    spostamento, differenza, direzione = calcolo_spostamento(livelli)
+    spostamento, distanza, direzione = calcolo_spostamento(livelli)
     # spostamento = 0.0
 
     # Calculate stazionarietà
@@ -32,14 +31,13 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
     # Calculate misura_erc
     alpha = 1
     beta = 1
-    misura_erc = alpha * spostamento + beta * stazionarieta
-    # misura_erc = 0.0
+    misura_erc = normalize_erc_sigmoid(spostamento, stazionarieta, alpha, beta, scale=2.0)
 
     # Return calculations
     return {
         "triplette": triplets,  
         "livelli": livelli,
-        "differenze": differenza,
+        "distanze": distanza,
         "direzioni": direzione,
         "ripetizioni": ripetizioni,
         "spostamento": spostamento,
