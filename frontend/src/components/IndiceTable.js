@@ -309,8 +309,8 @@ const RiskMeter = ({ value }) => {
           boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
         }} />
       </div>
-
-      {/* Scale Labels */}
+      
+      {/* Scale Labels 
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -325,6 +325,7 @@ const RiskMeter = ({ value }) => {
         <span>0.91</span>
         <span>1</span>
       </div>
+      */}
 
       {/* Legend */}
       <div style={{
