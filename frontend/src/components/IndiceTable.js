@@ -216,9 +216,9 @@ const IndiceResult = () => {
 const RiskMeter = ({ value }) => {
   // Determine risk level and color based on value
   const getRiskLevel = (val) => {
-    if (val < 0.5) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
-    if (val < 0.8) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
-    if (val < 0.95) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
+    if (val < 0.75) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
+    if (val < 0.83) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
+    if (val < 0.91) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
     return { level: 'Critico', color: '#e74c3c', bgColor: 'rgba(231, 76, 60, 0.15)' };
   };
 
@@ -277,10 +277,10 @@ const RiskMeter = ({ value }) => {
           display: 'flex',
           border: '1px solid #e0e0e0'
         }}>
-          <div style={{ flex: '25%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
-          <div style={{ flex: '25%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
-          <div style={{ flex: '25%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
-          <div style={{ flex: '25%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
+          <div style={{ flex: '75%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
+          <div style={{ flex: '8%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
+          <div style={{ flex: '8%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
+          <div style={{ flex: '9%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
         </div>
 
         {/* Filled Progress */}
@@ -320,9 +320,9 @@ const RiskMeter = ({ value }) => {
         fontWeight: '600'
       }}>
         <span>0</span>
-        <span>0.5</span>
-        <span>0.8</span>
-        <span>0.95</span>
+        <span>0.75</span>
+        <span>0.83</span>
+        <span>0.91</span>
         <span>1</span>
       </div>
 
@@ -335,10 +335,10 @@ const RiskMeter = ({ value }) => {
         paddingTop: '1.5rem',
         borderTop: '1px solid #f0f0f0'
       }}>
-        <LegendItem color="#2ecc71" label="Basso" range="0-3" />
-        <LegendItem color="#f39c12" label="Medio" range="3-6" />
-        <LegendItem color="#e67e22" label="Alto" range="6-9" />
-        <LegendItem color="#e74c3c" label="Critico" range="9+" />
+        <LegendItem color="#2ecc71" label="Basso"  />
+        <LegendItem color="#f39c12" label="Medio" />
+        <LegendItem color="#e67e22" label="Alto"  />
+        <LegendItem color="#e74c3c" label="Critico" />
       </div>
     </div>
   );

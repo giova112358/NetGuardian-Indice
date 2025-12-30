@@ -15,8 +15,10 @@ def get_triplets(input_list):
     Returns:
         List of triplets formed from the input list.
     """
-
-    return list(zip(input_list, input_list[1:], input_list[2:]))
+    input_list_set = list(set(input_list))
+    if len(input_list_set) < 3:
+        return []
+    return list(zip(input_list_set, input_list_set[1:], input_list_set[2:]))
 
 
 def check_triplets_nullo(triplets, data):
@@ -46,6 +48,9 @@ def calcolo_livelli(repertori: List[Any]):
     Returns:
         List of levels corresponding to each triplet.
     """
+    if not repertori or len(repertori) < 3:
+        return [], []
+
     repertori_data = load_repertori()
 
     # Get all triplets
@@ -53,7 +58,7 @@ def calcolo_livelli(repertori: List[Any]):
     triplets_filtered = check_triplets_nullo(triplets, repertori_data)
 
     if not triplets_filtered:
-        return []
+        return [], []
 
     print(f"Triplets: {triplets}")
     print("")
@@ -78,7 +83,8 @@ def calcolo_livelli(repertori: List[Any]):
         mapping = {"Minimo": 1, "Medio": 2, "Medio-alto": 3, "Alto": 4}
         mapped_levels = [mapping.get(l, l) for l in max_levels]
 
-        levels.append(mapped_levels[0])  # TODO: handle ties properly
+        levels.append(mapped_levels[-1])  
+
     print(f"Triplets Levels: {results}")
     print("")
 
@@ -162,8 +168,8 @@ def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
     print("")
 
     momento_dialogico = load_momento_dialogico()
-    epsilon = 1e-1
 
+    # Calcolo coefficienti per livelli stazionarietà
     md_values = list(momento_dialogico.values())
     md_min, md_max = min(md_values), max(md_values)
     chi = {k: (md_max - v) / (md_max - md_min) 
@@ -193,6 +199,7 @@ def normalize_erc_sigmoid(S, T, alpha, beta, scale=1.0):
         ERC_normalized: valore tra 0 e 1
     """
     ERC = alpha * S + beta * T
+
     # Applica sigmoid con scaling
     return 1 / (1 + np.exp(-ERC / scale))
 
