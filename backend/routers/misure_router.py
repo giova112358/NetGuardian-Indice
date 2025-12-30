@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from backend.schemas import IndiceRequest
 from backend.dependencies import get_repertori_data
-from backend.core.erc import calcolo_livelli, calcolo_spostamento, calcolo_stazionarieta, normalize_erc_sigmoid
+from backend.core.erc import calcolo_livelli, calcolo_spostamento, calcolo_stazionarieta, calcolo_erc
 import pandas as pd
 import json
 
@@ -31,7 +31,7 @@ def get_misure(request: IndiceRequest, repertori_data=Depends(get_repertori_data
     # Calculate misura_erc
     alpha = 1
     beta = 1
-    misura_erc = normalize_erc_sigmoid(spostamento, stazionarieta, alpha, beta, scale=2.0)
+    misura_erc = calcolo_erc(spostamento, stazionarieta, alpha, beta)
 
     # Return calculations
     return {

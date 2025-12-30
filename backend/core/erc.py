@@ -15,7 +15,7 @@ def get_triplets(input_list):
     Returns:
         List of triplets formed from the input list.
     """
-    input_list_set = list(set(input_list))
+    input_list_set = list(dict.fromkeys(input_list)) # Preserve the order but use set to dlete dplicates
     if len(input_list_set) < 3:
         return []
     return list(zip(input_list_set, input_list_set[1:], input_list_set[2:]))
@@ -144,7 +144,7 @@ def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]
 
     # Spostamento
     spostamenti = np.array(direzione) * np.array(distanza)
-    spostamento = np.sum(spostamenti)
+    spostamento = np.sum(spostamenti) / len(livelli)
 
     return float(spostamento), distanza, direzione
 
@@ -167,13 +167,9 @@ def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
     print(f"Ripetizioni consecutive: {ripetizioni}")
     print("")
 
-    momento_dialogico = load_momento_dialogico()
-
     # Calcolo coefficienti per livelli stazionarietà
-    md_values = list(momento_dialogico.values())
-    md_min, md_max = min(md_values), max(md_values)
-    chi = {k: (md_max - v) / (md_max - md_min) 
-            for k, v in momento_dialogico.items()}
+    
+    chi = {1: 1, 2: 2, 3: 3, 4: 4}
 
     temp = []
     for key, value in ripetizioni.items():
@@ -181,11 +177,13 @@ def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
 
     print(f"Temp: {temp}")
     print("")
-    stazionarieta = sum(temp)
+    stazionarieta = sum(temp) / len(livelli)
+    print(f"Stazionarietà: {stazionarieta}")
+    print("")
 
     return float(stazionarieta), ripetizioni
 
-def normalize_erc_sigmoid(S, T, alpha, beta, scale=1.0):
+def calcolo_erc(spostamento, stazionarieta,  alpha=0.5, beta=0.5, scale_s=1.0, scale_t=1.0):
     """
     Normalizza S e T con sigmoid per ottenere ERC_normalized ∈ [0, 1]
     
@@ -198,10 +196,29 @@ def normalize_erc_sigmoid(S, T, alpha, beta, scale=1.0):
     Returns:
         ERC_normalized: valore tra 0 e 1
     """
-    ERC = alpha * S + beta * T
+    # Ensure equal weighting (normalize alpha and beta to sum to 1)
+    weight_sum = alpha + beta
+    alpha_norm = alpha / weight_sum
+    beta_norm = beta / weight_sum
+
+    if spostamento <= 0:
+        S_norm = 0
+    else:
+        # Normalize spostamento to [0, 1] using sigmoid
+        # Negative values → [0, 0.5), zero → 0.5, positive values → (0.5, 1]
+        S_norm = 1 / (1 + np.exp(-spostamento / scale_s))
+    
+    # Normalize stazionarieta to [0, 1] using sigmoid
+    # Higher stationarity → values closer to 1
+    T_norm = 1 / (1 + np.exp(-stazionarieta / scale_t))
+
+    # Linear combination with normalized weights
+    # Result is guaranteed to be in [0, 1] since both components are in [0, 1]
+    #ERC = alpha_norm * S_norm + beta_norm * T_norm
+    ERC = S_norm + T_norm
 
     # Applica sigmoid con scaling
-    return 1 / (1 + np.exp(-ERC / scale))
+    return float(ERC)
 
 
 if __name__ == "__main__":

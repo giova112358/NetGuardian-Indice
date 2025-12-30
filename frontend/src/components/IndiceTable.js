@@ -216,9 +216,9 @@ const IndiceResult = () => {
 const RiskMeter = ({ value }) => {
   // Determine risk level and color based on value
   const getRiskLevel = (val) => {
-    if (val < 0.75) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
-    if (val < 0.83) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
-    if (val < 0.91) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
+    if (val < 0.25) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
+    if (val < 0.50) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
+    if (val < 0.75) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
     return { level: 'Critico', color: '#e74c3c', bgColor: 'rgba(231, 76, 60, 0.15)' };
   };
 
@@ -277,10 +277,10 @@ const RiskMeter = ({ value }) => {
           display: 'flex',
           border: '1px solid #e0e0e0'
         }}>
-          <div style={{ flex: '75%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
-          <div style={{ flex: '8%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
-          <div style={{ flex: '8%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
-          <div style={{ flex: '9%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
+          <div style={{ flex: '25%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
         </div>
 
         {/* Filled Progress */}
