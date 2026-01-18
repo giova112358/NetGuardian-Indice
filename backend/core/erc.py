@@ -15,7 +15,8 @@ def get_triplets(input_list):
     Returns:
         List of triplets formed from the input list.
     """
-    input_list_set = list(dict.fromkeys(input_list)) # Preserve the order but use set to dlete dplicates
+    #input_list_set = list(dict.fromkeys(input_list)) # Preserve the order but use set to dlete dplicates
+    input_list_set = input_list
     if len(input_list_set) < 3:
         return []
     return list(zip(input_list_set, input_list_set[1:], input_list_set[2:]))
@@ -98,133 +99,102 @@ def calcolo_livelli(repertori: List[Any]):
     ]
     return levels, results_list
 
-
-def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[int], List[int]]:
+def calcolo_spostamento(livelli: List[int]) -> Tuple[float, List[float], List[int], List[float]]:
     """
-    Spostamento calculation based on levels.
-
-    Args:
-        livelli: List of numerical levels.
+    Calcola spostamento totale (SOMMA, non media).
+    
     Returns:
-        Spostamento value as a float.
+      - spostamento_totale: float (somma di s_i)
+      - distanze: List[float]
+      - direzioni: List[int]
+      - spostamenti: List[float] (per use in compute_stationarity_enhanced)
     """
-    # Differenza
     differenza = [livelli[i + 1] - livelli[i] for i in range(len(livelli) - 1)]
-
-    # Differenza momenti dialogici
     momento_dialogico = load_momento_dialogico()
     livelli_momento = [momento_dialogico.get(level, 0) for level in livelli]
     differenza_momento = [
         abs(livelli_momento[i + 1] - livelli_momento[i])
         for i in range(len(livelli_momento) - 1)
     ]
-
-    print(f"Differenza: {differenza}")
-    print(f"Differenza Momenti Dialogici: {differenza_momento}")
-    print("")
-
-    # Direzione
-    direzione = []
-    for diff in differenza:
-        if diff < 0:
-            direzione.append(-1)
-        elif diff > 0:
-            direzione.append(1)
-        else:
-            direzione.append(0)
-
-    print(f"Direzione: {direzione}")
-    print("")
-
-    # Distanza
+    
+    direzione = [
+        -1 if diff < 0 else (1 if diff > 0 else 0)
+        for diff in differenza
+    ]
+    
     distanza = [abs(d) for d in differenza_momento]
-
-    print(f"Distanza: {distanza}")
-    print("")
-
-    # Spostamento
     spostamenti = np.array(direzione) * np.array(distanza)
-    spostamento = np.sum(spostamenti) / len(livelli)
-
-    return float(spostamento), distanza, direzione
-
-
-def calcolo_stazionarieta(livelli: List[int]) -> Tuple[float, List[int]]:
-    """
-    Stazionarietà calculation based on levels.
-
-    Args:
-        livelli: List of numerical levels.
-    Returns:
-        Stazionarietà value as a float.
-    """
-
-    def consecutive_repetitions(livelli):
-        return {key: sum(1 for _ in group) for key, group in groupby(livelli)}
-
-    ripetizioni = consecutive_repetitions(livelli)
-
-    print(f"Ripetizioni consecutive: {ripetizioni}")
-    print("")
-
-    # Calcolo coefficienti per livelli stazionarietà
     
-    chi = {1: 1, 2: 2, 3: 3, 4: 4}
-
-    temp = []
-    for key, value in ripetizioni.items():
-        temp.append(chi[key] * value)
-
-    print(f"Temp: {temp}")
-    print("")
-    stazionarieta = sum(temp) / len(livelli)
-    print(f"Stazionarietà: {stazionarieta}")
-    print("")
-
-    return float(stazionarieta), ripetizioni
-
-def calcolo_erc(spostamento, stazionarieta,  alpha=0.5, beta=0.5, scale_s=1.0, scale_t=1.0):
-    """
-    Normalizza S e T con sigmoid per ottenere ERC_normalized ∈ [0, 1]
+    spostamento_totale = float(np.sum(spostamenti))
     
-    Args:
-        S: spostamento totale (può essere negativo)
-        T: stazionarietà totale (sempre positiva)
-        alpha, beta: parametri di calibrazione
-        scale: fattore di scaling per controllo della curvatura
-    
-    Returns:
-        ERC_normalized: valore tra 0 e 1
-    """
-    # Ensure equal weighting (normalize alpha and beta to sum to 1)
-    weight_sum = alpha + beta
-    alpha_norm = alpha / weight_sum
-    beta_norm = beta / weight_sum
+    return spostamento_totale, distanza, direzione, spostamenti.tolist()
 
-    if spostamento <= 0:
-        S_norm = 0
+
+def compute_stationarity_enhanced(levels: List[int], displacements: List[float], 
+                                  λ=0.3, k_sat=5) -> float:
+    """
+    Calcola stazionarietà con coupling a spostamenti (formula migliorata).
+    """
+    MD = load_momento_dialogico()
+    q = max(MD.values()) + 0.1
+    gamma = {k: q - MD[k] for k in MD}
+    
+    episodes = []
+    i = 0
+    
+    while i < len(levels):
+        level = levels[i]
+        start = i
+        
+        while i < len(levels) and levels[i] == level:
+            i += 1
+        
+        duration = i - start
+        
+        # Accesso robusto a displacements
+        if start == 0:
+            s_entry = 0
+        elif start - 1 < len(displacements):
+            s_entry = displacements[start - 1]
+        else:
+            s_entry = 0
+        
+        episodes.append({
+            'level': level,
+            'duration': duration,
+            's_entry': s_entry
+        })
+    
+    T = 0
+    for ep in episodes:
+        level = ep['level']
+        duration = ep['duration']
+        s_entry = ep['s_entry']
+        
+        weight = gamma[level] + λ * abs(s_entry)
+        contribution = weight * min(duration, k_sat)
+        T += contribution
+    
+    return float(T)
+
+def normalize_erc_tanh(erc, K=10):
+    """
+    K è la scala: valori > K saturano verso 1
+    Consiglio: K = max_erc_osservato / 2
+    """
+    return np.tanh(erc / K)
+
+
+def calcolo_erc(stazionarieta: float
+                ) -> float:
+    """
+    Output: ∈ [0, 1]
+    
+    """
+    ERC_raw = normalize_erc_tanh(stazionarieta)
+    if ERC_raw <= 0:
+        ERC_norm = 0.0
     else:
-        # Normalize spostamento to [0, 1] using sigmoid
-        # Negative values → [0, 0.5), zero → 0.5, positive values → (0.5, 1]
-        S_norm = 1 / (1 + np.exp(-spostamento / scale_s))
+        ERC_norm = np.tanh(ERC_raw)
     
-    # Normalize stazionarieta to [0, 1] using sigmoid
-    # Higher stationarity → values closer to 1
-    T_norm = 1 / (1 + np.exp(-stazionarieta / scale_t))
-
-    # Linear combination with normalized weights
-    # Result is guaranteed to be in [0, 1] since both components are in [0, 1]
-    #ERC = alpha_norm * S_norm + beta_norm * T_norm
-    ERC = S_norm + T_norm
-
-    # Applica sigmoid con scaling
-    return float(ERC)
-
-
-if __name__ == "__main__":
-    sample_list = [1, 2, 3, 4, 5, 1, 2, 3]
-
-    triplets_zip = get_triplets(sample_list)
-
-    print(f"Input List: {sample_list}")
-    print(f"Triplets using zip: {triplets_zip}")
+    return float(ERC_norm)

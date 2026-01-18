@@ -26,7 +26,6 @@ const IndiceResult = () => {
   const livelli = data.livelli;
   const distanze = data.distanze;
   const direzioni = data.direzioni;
-  const ripetizioni = data.ripetizioni;
   const repertori = data.repertori || data.Repertori || [];
   const spostamento = data.Spostamento || data.spostamento || 0;
   const stazionarieta = data.Stazionarietà || data.stazionarieta || 0;
@@ -109,11 +108,6 @@ const IndiceResult = () => {
                 values={direzioni || []} 
                 color="#1abc9c"
               />
-              <DictMetricCard 
-                label="Ripetizioni" 
-                data={ripetizioni || {}} 
-                color="#e67e22"
-              />
             </div>
           </div>
 
@@ -170,28 +164,6 @@ const IndiceResult = () => {
 
           <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
 
-          {/* Section 3: Indicatori Finali */}
-          <div>
-            <h4 className="usage-title">Indicatori Finali</h4>
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-              gap: '1.5rem',
-              marginTop: '1rem'
-            }}>
-              <MetricCard 
-                label="Spostamento" 
-                value={spostamento} 
-                color="#e74c3c"
-              />
-              <MetricCard 
-                label="Stazionarietà" 
-                value={stazionarieta} 
-                color="#f39c12"
-              />
-            </div>
-          </div>
-
           <hr style={{ border: '0', borderTop: '1px solid #eee', margin: '2rem 0' }} />
 
           {/* Section 4: Risk Meter Visualization */}
@@ -216,10 +188,10 @@ const IndiceResult = () => {
 const RiskMeter = ({ value }) => {
   // Determine risk level and color based on value
   const getRiskLevel = (val) => {
-    if (val < 0.25) return { level: 'Basso', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
-    if (val < 0.50) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
-    if (val < 0.75) return { level: 'Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
-    return { level: 'Critico', color: '#e74c3c', bgColor: 'rgba(231, 76, 60, 0.15)' };
+    if (val < 0.35) return { level: 'Minimo', color: '#2ecc71', bgColor: 'rgba(46, 204, 113, 0.15)' };
+    if (val < 0.60) return { level: 'Medio', color: '#f39c12', bgColor: 'rgba(243, 156, 18, 0.15)' };
+    if (val < 0.80) return { level: 'Medio-Alto', color: '#e67e22', bgColor: 'rgba(230, 126, 34, 0.15)' };
+    return { level: 'Alto', color: '#e74c3c', bgColor: 'rgba(231, 76, 60, 0.15)' };
   };
 
   const risk = getRiskLevel(value);
@@ -277,10 +249,10 @@ const RiskMeter = ({ value }) => {
           display: 'flex',
           border: '1px solid #e0e0e0'
         }}>
-          <div style={{ flex: '25%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
+          <div style={{ flex: '35%', backgroundColor: 'rgba(46, 204, 113, 0.2)' }} />
           <div style={{ flex: '25%', backgroundColor: 'rgba(243, 156, 18, 0.2)' }} />
-          <div style={{ flex: '25%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
-          <div style={{ flex: '25%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
+          <div style={{ flex: '20%', backgroundColor: 'rgba(230, 126, 34, 0.2)' }} />
+          <div style={{ flex: '20%', backgroundColor: 'rgba(231, 76, 60, 0.2)' }} />
         </div>
 
         {/* Filled Progress */}
@@ -336,10 +308,10 @@ const RiskMeter = ({ value }) => {
         paddingTop: '1.5rem',
         borderTop: '1px solid #f0f0f0'
       }}>
-        <LegendItem color="#2ecc71" label="Basso"  />
+        <LegendItem color="#2ecc71" label="Minimo"  />
         <LegendItem color="#f39c12" label="Medio" />
-        <LegendItem color="#e67e22" label="Alto"  />
-        <LegendItem color="#e74c3c" label="Critico" />
+        <LegendItem color="#e67e22" label="Medio-Alto"  />
+        <LegendItem color="#e74c3c" label="Alto" />
       </div>
     </div>
   );
